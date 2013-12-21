@@ -45,7 +45,7 @@ public class ResourceManagerTest {
         TilingDTO tiling = new TilingDTO();
         tiling.setTiled(false);
         try {
-            File file = new File("C:\\Users\\Moolt\\Pictures\\random\\monogatariseries1201-150x150.jpg");
+            File file = new File("C:\\Users\\Moolt\\Pictures\\random\\1376164709517.png");
             BufferedImage[] img = {ImageIO.read(file)};
             Sprite spr = new Sprite();
             spr.setHeight(img[0].getHeight());
