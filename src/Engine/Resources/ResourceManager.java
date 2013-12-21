@@ -62,7 +62,7 @@ public class ResourceManager {
         int fileLength;
         //Stores the binary data of the image
         byte[] imgBytes;
-        
+
         try (ObjectInputStream io = new ObjectInputStream(new FileInputStream(file))) {
             int filetype = io.readInt();
             //Read Meta-Data from file
@@ -73,13 +73,7 @@ public class ResourceManager {
             sprite.setYorigin(io.readInt());
 
             if (filetype == 0) {
-                //io.skipBytes(24);
-                io.readInt();
-                io.readInt();
-                io.readInt();
-                io.readInt();
-                io.readInt();
-                io.readInt();
+                io.skipBytes(24);
                 //Sprite without animation does not contain tiling
                 tiling.setTiled(false);
             } else if (filetype == 2) {
@@ -96,7 +90,7 @@ public class ResourceManager {
             //Read Image(s)
             fileLength = io.readInt();
             imgBytes = new byte[fileLength];
-            io.read(imgBytes, 0, fileLength);
+            io.readFully(imgBytes, 0, fileLength);
             img = GetImageFromBytes(imgBytes);
             if (tiling.isTiled()) {
                 imageList = AnimationFromBitmap(tiling, img);
@@ -111,6 +105,12 @@ public class ResourceManager {
 
     private static BufferedImage GetImageFromBytes(byte[] bytes) throws IOException {
         InputStream is = new ByteArrayInputStream(bytes);
+       
+        File sf = new File("./tex/"+bytes.length+".png");
+        FileOutputStream fo = new FileOutputStream(sf);
+        fo.write(bytes);
+        fo.close();
+        
         BufferedImage img = ImageIO.read(is);
         return img;
     }
@@ -150,13 +150,7 @@ public class ResourceManager {
         io.writeInt(sprite.getYorigin());
 
         if (filetype == 0) {
-            io.writeInt(0);
-            io.writeInt(0);
-            io.writeInt(0);
-            io.writeInt(0);
-            io.writeInt(0);
-            io.writeInt(0);
-            //io.write(new byte[24]);
+            io.write(new byte[24]);
         } else {
             io.writeInt(tiling.getWidth());
             io.writeInt(tiling.getHeight());
@@ -166,14 +160,14 @@ public class ResourceManager {
             io.writeInt(tiling.getvSeparation());
         }
 
-        for (BufferedImage bi : images) {
-//            ByteArrayOutputStream bs = new ByteArrayOutputStream();
-//            ImageIO.write(bi, "jpeg", bs);
-            byte[] imageBytes = ((DataBufferByte)bi.getData().getDataBuffer()).getData();
+        for (BufferedImage bufferedImage : images) {
+            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", byteStream);
+            byte[] imageBytes = byteStream.toByteArray();
             io.writeInt(imageBytes.length);
             io.write(imageBytes);
-            
-            File sf = new File("./tex/bild.jpg");
+
+            File sf = new File("./tex/bild.png");
             FileOutputStream fo = new FileOutputStream(sf);
             fo.write(imageBytes);
             fo.close();
