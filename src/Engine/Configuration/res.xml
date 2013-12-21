@@ -1,0 +1,10 @@
+<Resources>
+	<Graphics>
+		<Sprite name="sprite3">
+			<Name>sprite3</Name>
+			<Path>./res/sprite/sprite3.jpg</Path>
+			<XOrigin>0</XOrigin>
+			<YOrigin>0</YOrigin>
+		</Sprite>
+	</Graphics>
+</Resources>

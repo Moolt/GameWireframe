@@ -1,0 +1,2 @@
+Image-Types in Java
+https://weblogs.java.net/blog/chet/archive/2004/08/toolkitbuffered.html

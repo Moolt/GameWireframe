@@ -1,0 +1,18 @@
+//Background File Specification
+
+4 byte: filetype:
+	0: normal sprite
+	1: tileset
+	2: animation
+4 byte: sprites width in pixels
+4 byte: sprites height in pixels
+4 byte: x origin
+4 byte: y origin
+4 byte: frame width in pixels
+4 byte: frame height in pixels
+4 byte: frame offset width
+4 byte: frame offset height
+4 byte: horizonal separation
+4 byte: vertical separation
+4 byte: filesize in bytes (= n)
+n byte: the actual image
